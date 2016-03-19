@@ -87,11 +87,8 @@ if __name__=="__main__":
 
         # If there's something to reply to,
         # we'd best load the stuff to do that
-<<<<<<< HEAD:speak-mentions-pics_2.py
+
         mine = markov_2.MarkovChainer(2,BRAIN_PATH)
-=======
-        mine = pickle.load(open(BRAIN_LOCATION+ "botbrain.p" , "rb" ))
->>>>>>> master:mentions.py
  
         for x in range(0,len(mentions)):
 
@@ -117,13 +114,19 @@ if __name__=="__main__":
                 print "Searching for: " + reply[1]
             
                 imgur = imgurconnect()
-                imgs = imgur.gallery_search('',{"q_any": reply[1]})
 
+                imgs = imgur.gallery_search('',{'q_all': ebook_tweet})
                 print "Images found: " + str(len(imgs))
-                
+
                 if len(imgs) == 0:
-                    print "No images found for search, going random"
+                    print "No images found for all search, search ANY"
+                    imgs = imgur.gallery_search('',{'q_any': ebook_tweet})
+                    print "Images found: " + str(len(imgs))
+
+                if len(imgs) == 0:
+                    print "No images found for all search, going random"
                     imgs = imgur.gallery_random()
+                    print "Images found: " + str(len(imgs))
                 
                 for img in imgs:
                     if img.is_album == False and img.size < 3000000 and img.nsfw == False:

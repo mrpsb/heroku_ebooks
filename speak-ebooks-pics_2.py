@@ -14,7 +14,7 @@ from imgurpython import ImgurClient
 
 try:
     if sys.argv[1] == "JFDI":
-	ODDS = 1
+    ODDS = 1
 except:
     pass
 
@@ -59,35 +59,35 @@ if __name__=="__main__":
             # tweet as query and post the tweet with the image
             
             if ebook_tweet != None and len(ebook_tweet) < 40:
-                print "I'm going to post a disgusting image: " + ebook_tweet
 
-                # connect to imgur, search for an image, if you don't find
-                # one then grab a random one
+        if mine.duplicate_tweet(ebook_tweet) == False:
+
+                    print "I'm going to post a disgusting image: " + ebook_tweet
+                    # connect to imgur, search for an image, if you don't find
+                    # one then grab a random one
               
-                imgur = imgurconnect()
-
-                imgs = imgur.gallery_search('',{'q_all': ebook_tweet})
-                print "Images found: " + str(len(imgs))
-
-                if len(imgs) == 0:
-                    print "No images found for all search, search ANY"
+                    imgur = imgurconnect()
                     imgs = imgur.gallery_search('',{'q_any': ebook_tweet})
-                    print "Images found: " + str(len(imgs))
 
-                if len(imgs) == 0:
-                    print "No images found for all search, going random"
-                    imgs = imgur.gallery_random()
-                    print "Images found: " + str(len(imgs))
-
-                for img in imgs:
-                    if img.is_album == False and img.size < 3000000 and img.nsfw == False:
-                        grabfile = urllib.URLopener()
-                        print "Grabbing file " + img.link
-                        imgfile = grabfile.retrieve(img.link)
-                        break
+                        print "Images found: " + str(len(imgs))
+                
+                        if len(imgs) == 0:
+                            print "No images found for search, going random"
+                            imgs = imgur.gallery_random()
+                
+                        for img in imgs:
+                            if img.is_album == False and img.size < 3000000 and img.nsfw == False:
+                                grabfile = urllib.URLopener()
+                                print "Grabbing file " + img.link
+                                imgfile = grabfile.retrieve(img.link)
+                                break
                         
-                success = True
-                imgtweet = True
+                        success = True
+                        imgtweet = True
+
+        else:
+            ebook_tweet += mine.generate_sentence()
+            imgtweet = False
 
             if imgtweet == False:
                 #throw out tweets that match anything from the source account.
@@ -117,8 +117,9 @@ if __name__=="__main__":
             if success == True:
                 if DEBUG == False:
                     if imgtweet == True:
-                        status = api.PostMedia(ebook_tweet, open(imgfile[0],"rb"))
-                        print status.text.encode('UTF-8')
+                         status = api.PostMedia(ebook_tweet, open(imgfile[0],"rb"))
+#			 status = api.PostUpdate(ebook_tweet)			 
+                     print status.text.encode('UTF-8')
                     else:
                         status = api.PostUpdate(ebook_tweet)
                         s = status.text.encode('utf-8')

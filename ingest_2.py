@@ -85,10 +85,10 @@ if __name__=="__main__":
     db.commit()
     db.close()
 
-    mine = markov_2.MarkovChainer(2,BRAIN_LOCATION) # change "2" to "order" to use order from config file
+    mine = markov_2.MarkovChainer(2,BRAIN_PATH) # change "2" to "order" to use order from config file
 
     mine.init_db()
-
+    print("Ommmm"),
     for tweet in source_tweets:
         # if the tweet has punctuation in it, then great
         if re.search('([\.\!\?\"\']$)', tweet):
@@ -97,14 +97,12 @@ if __name__=="__main__":
         # when it tries to split the text
         else:
             tweet+="."
-        mine.add_text(tweet)
+        
+	mine.add_text(tweet)
+	print("Nom"),
 
-<<<<<<< HEAD:ingest_2.py
     mine.commit_db()
     mine.compact_db()
-=======
+
 # Do something to stick object "mine" onto disk for later use
 
-    pickle.dump( mine , open(BRAIN_LOCATION + "botbrain.p", "wb" ))
-    pickle.dump( source_tweets, open(BRAIN_LOCATION + "source_tweets.p","wb"))
->>>>>>> master:ingest.py

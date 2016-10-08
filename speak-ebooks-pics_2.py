@@ -4,9 +4,9 @@ import markov_2
 import pyttsx
 import sys
 import urllib
+import images
 
 from local_settings import *
-from imgurpython import ImgurClient
 
 # Edited for running direct on Ras Pi using cron
 # Instead of giving up on a failed tweet retries until success
@@ -14,7 +14,7 @@ from imgurpython import ImgurClient
 
 try:
     if sys.argv[1] == "JFDI":
-	ODDS = 1
+        ODDS = 1
 except:
     pass
 
@@ -24,10 +24,6 @@ def connect():
                           access_token_key=MY_ACCESS_TOKEN_KEY,
                           access_token_secret=MY_ACCESS_TOKEN_SECRET)
     return api
-
-def imgurconnect():
-    imgur = ImgurClient(IMGUR_CLIENT_ID, IMGUR_CLIENT_SECRET)
-    return imgur
 
 if __name__=="__main__":
         
@@ -59,39 +55,35 @@ if __name__=="__main__":
             # tweet as query and post the tweet with the image
             
             if ebook_tweet != None and len(ebook_tweet) < 40:
-                print "I'm going to post a disgusting image: " + ebook_tweet
 
-                # connect to imgur, search for an image, if you don't find
-                # one then grab a random one
-              
-                imgur = imgurconnect()
+                if mine.duplicate_tweet(ebook_tweet) == False:
 
-                imgs = imgur.gallery_search('',{'q_all': ebook_tweet})
-                print "Images found: " + str(len(imgs))
+                    print "I'm going to post a disgusting image: " + ebook_tweet
+                    # connect to Google Image Search, search for an image, if you don't find
+                    # one then don't bother
 
-                if len(imgs) == 0:
-                    print "No images found for all search, search ANY"
-                    imgs = imgur.gallery_search('',{'q_any': ebook_tweet})
-                    print "Images found: " + str(len(imgs))
+                    img = images.grabImage(images.searchCleanup(ebook_tweet))
 
-                if len(imgs) == 0:
-                    print "No images found for all search, going random"
-                    imgs = imgur.gallery_random()
-                    print "Images found: " + str(len(imgs))
-
-                for img in imgs:
-                    if img.is_album == False and img.size < 3000000 and img.nsfw == False:
+                    if len(img) > 0:
+                        print "Image Found " + img
                         grabfile = urllib.URLopener()
-                        print "Grabbing file " + img.link
-                        imgfile = grabfile.retrieve(img.link)
-                        break
-                        
-                success = True
-                imgtweet = True
+                        print "Grabbing file " + img
+                        imgfile = grabfile.retrieve(img)
+
+                        success = True
+                        imgtweet = True
+                    else:
+                        print "No Image Found"
+                        success = True
+                        imgtweet = False
+
+                else:
+                    ebook_tweet += " " + mine.generate_sentence()
+                    imgtweet = False
 
             if imgtweet == False:
                 #throw out tweets that match anything from the source account.
-                if ebook_tweet != None and len(ebook_tweet) < 120:
+                if ebook_tweet != None and len(ebook_tweet) < 138:
 
                     print "Success!"
                     success = True
@@ -119,6 +111,7 @@ if __name__=="__main__":
                     if imgtweet == True:
                         status = api.PostMedia(ebook_tweet, open(imgfile[0],"rb"))
                         print status.text.encode('UTF-8')
+
                     else:
                         status = api.PostUpdate(ebook_tweet)
                         s = status.text.encode('utf-8')

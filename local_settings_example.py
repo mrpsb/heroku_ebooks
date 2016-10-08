@@ -8,9 +8,9 @@ MY_CONSUMER_SECRET = ''
 MY_ACCESS_TOKEN_KEY = ''
 MY_ACCESS_TOKEN_SECRET = ''
 
-#Imgur API key
-IMGUR_CLIENT_ID = ''
-IMGUR_CLIENT_SECRET = ''
+#Google Search API Key - requires a custom search with Image search enabled
+GOOGLE_API = ''
+GOOGLE_CSE = ''
 
 #How often do you want this to run? Runs every 1/ODDS times
 ODDS = 8

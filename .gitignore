@@ -5,3 +5,10 @@ local_settings_TEST.py
 *.txt
 *.p
 *.db
+.idea/workspace.xml
+*.name
+.idea/encodings.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/misc.xml
+*.iml

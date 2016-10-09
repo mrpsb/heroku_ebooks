@@ -1,10 +1,10 @@
-
 import twitter
 import markov_2
 import pyttsx
 import cPickle as pickle
 import urllib
 import images
+from imgurpython import ImgurClient
 
 from local_settings import *
 #from imgurpython import ImgurClient
@@ -22,11 +22,10 @@ def connect():
                           access_token_secret=MY_ACCESS_TOKEN_SECRET)
     return api
 
-#def imgurconnect():
+def imgurconnect():
+    imgur = ImgurClient(IMGUR_CLIENT_ID, IMGUR_CLIENT_SECRET)
 
-#    imgur = ImgurClient(IMGUR_CLIENT_ID, IMGUR_CLIENT_SECRET)
-
-#   return imgur
+    return imgur
 
 
 
@@ -77,6 +76,7 @@ if __name__=="__main__":
     
     try:
         lastmention = pickle.load(open(BRAIN_LOCATION + "lastmention.p","rb"))
+	print lastmention
     except:
         lastmention = 0
     
@@ -118,7 +118,7 @@ if __name__=="__main__":
                 print "Searching for: " + reply[1]
             
                 imgur = imgurconnect()
-                imgs = imgur.gallery_search('',{"q_any": searchCleanup(reply[1])})
+                imgs = imgur.gallery_search('',{"q_any": images.searchCleanup(reply[1])})
 
                 print "Images found: " + str(len(imgs))
                 

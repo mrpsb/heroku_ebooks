@@ -54,7 +54,7 @@ if __name__=="__main__":
             # if a tweet is very short, this uses it to search imgur with the
             # tweet as query and post the tweet with the image
             
-            if ebook_tweet != None and len(ebook_tweet) < 40:
+            if ebook_tweet != None and len(ebook_tweet) < 80:
 
                 if mine.duplicate_tweet(ebook_tweet) == False:
 
@@ -65,13 +65,22 @@ if __name__=="__main__":
                     img = images.grabImage(images.searchCleanup(ebook_tweet))
 
                     if len(img) > 0:
-                        print "Image Found " + img
-                        grabfile = urllib.URLopener()
-                        print "Grabbing file " + img
-                        imgfile = grabfile.retrieve(img)
+                    # Quite a few sites don't like being hit for direct download
+                    # With HTTPlib so just give up for now and drop the image
+                    # Further investigation needed!                        
+			try:
+			    print "Image Found " + img
+                            grabfile = urllib.URLopener()
+                            print "Grabbing file " + img
+                            imgfile = grabfile.retrieve(img)
 
-                        success = True
-                        imgtweet = True
+                            success = True
+                            imgtweet = True
+                        except:
+                            print "This site doesn't like me touching it"
+                            success = True
+                            imgtweet = False
+
                     else:
                         print "No Image Found"
                         success = True

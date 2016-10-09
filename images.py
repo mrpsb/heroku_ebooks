@@ -25,11 +25,8 @@ def grabImage(query):
 def searchCleanup(searchterm):
     #Apart from first word which will be capitalised anyway, hoik out anything
     #that's capitalised to use for searching
-    srcterm = filter(unicode.istitle,searchterm[1:].split(' '))
+    srcterm = filter(unicode.istitle,searchterm.split(' '))
     output = ""
-
-    if len(srcterm) == 1:
-        srcterm = filter(unicode.istitle,searchterm.split(' '))
 
     if len(srcterm) > 1:
         for s in srcterm:

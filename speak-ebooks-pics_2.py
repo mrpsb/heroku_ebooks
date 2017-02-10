@@ -118,7 +118,14 @@ if __name__=="__main__":
             if success == True:
                 if DEBUG == False:
                     if imgtweet == True:
-                        status = api.PostMedia(ebook_tweet, open(imgfile[0],"rb"))
+                        # status = api.PostMedia(ebook_tweet, open(imgfile[0],"rb"))
+						
+			if random.choice(range(10)) == 10:
+                            print "OH SHIT YOU ROLLED A 10 THINGS ARE GOING TO GET POLITICAL"
+			    status = api.PostMedia("So much for the tolerant left", open(imgfile[0],"rb"))
+			else:
+	                    status = api.PostMedia(ebook_tweet, open(imgfile[0],"rb"))
+						
                         print status.text.encode('UTF-8')
 
                     else:

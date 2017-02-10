@@ -120,7 +120,7 @@ if __name__=="__main__":
                     if imgtweet == True:
                         # status = api.PostMedia(ebook_tweet, open(imgfile[0],"rb"))
 						
-			if random.choice(range(10)) == 10:
+			if random.choice(range(10)) == 0:
                             print "OH SHIT YOU ROLLED A 10 THINGS ARE GOING TO GET POLITICAL"
 			    status = api.PostMedia("So much for the tolerant left", open(imgfile[0],"rb"))
 			else:

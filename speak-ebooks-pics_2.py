@@ -119,11 +119,18 @@ if __name__=="__main__":
                 if DEBUG == False:
                     if imgtweet == True:
                         # status = api.PostMedia(ebook_tweet, open(imgfile[0],"rb"))
-						
-			if random.choice(range(10)) == 0:
-                            print "OH SHIT YOU ROLLED A 10 THINGS ARE GOING TO GET POLITICAL"
-			    status = api.PostMedia("So much for the tolerant left", open(imgfile[0],"rb"))
-			else:
+
+			randodando = random.choice(range(25))
+                        # DEBUGMODELOL
+                        # randodando = 1			
+			if randodando == 0:
+                            print "OH SHIT YOU ROLLED A 10 THINGS ARE GOING TO GET SEXY"
+			    status = api.PostMedia("We've all been there", open(imgfile[0],"rb"))
+			#elif randodando == 1:
+		        #    print "IT'S SATIRE TIME BABY"
+                        #    status = api.PostMedia("", open(imgfile[0],"rb"))
+
+      else:
 	                    status = api.PostMedia(ebook_tweet, open(imgfile[0],"rb"))
 						
                         print status.text.encode('UTF-8')

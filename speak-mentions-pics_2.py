@@ -1,4 +1,3 @@
-
 import twitter
 import markov_2
 import cPickle as pickle
@@ -6,7 +5,7 @@ import urllib
 import images
 
 from local_settings import *
-from imgurpython import ImgurClient
+#from imgurpython import ImgurClient
 
 # Edited for running direct on Ras Pi using cron
 # Instead of giving up on a failed tweet retries until success
@@ -22,15 +21,14 @@ def connect():
     return api
 
 def imgurconnect():
-
     imgur = ImgurClient(IMGUR_CLIENT_ID, IMGUR_CLIENT_SECRET)
 
     return imgur
 
 
-def replytweetgen(mine, usernames, maxchar):
+def replytweetgen(mine, usernames, maxchar):                           
 
-    success = False
+  success = False
     
     # this section does the actual building of reply tweet
     # changed it to try again on failure, default was to just give up
@@ -71,6 +69,7 @@ if __name__=="__main__":
 
     try:
         lastmention = pickle.load(open(BRAIN_LOCATION + "lastmention.p","rb"))
+	print lastmention
     except:
         lastmention = 0
     
@@ -84,7 +83,9 @@ if __name__=="__main__":
 
         # If there's something to reply to,
         # we'd best load the stuff to do that
+
         mine = markov_2.MarkovChainer(2,BRAIN_PATH)
+
  
         for x in range(0,len(mentions)):
 

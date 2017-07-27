@@ -119,6 +119,7 @@ if __name__=="__main__":
                 if DEBUG == False:
                     if imgtweet == True:
                         # status = api.PostMedia(ebook_tweet, open(imgfile[0],"rb"))
+
 			randodando = random.choice(range(25))
                         # DEBUGMODELOL
                         # randodando = 1			
@@ -128,7 +129,8 @@ if __name__=="__main__":
 			#elif randodando == 1:
 		        #    print "IT'S SATIRE TIME BABY"
                         #    status = api.PostMedia("", open(imgfile[0],"rb"))
-			else:
+
+      else:
 	                    status = api.PostMedia(ebook_tweet, open(imgfile[0],"rb"))
 						
                         print status.text.encode('UTF-8')

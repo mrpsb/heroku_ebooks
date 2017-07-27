@@ -15,7 +15,7 @@ def grabImage(query):
                                 fileType = 'png gif jpg',
                                 searchType ='image',
                                 filter='1',
-                                safe = 'off'
+                                safe = 'medium'
                                 ).execute()
 
     output = random.choice(results['items'])['link']
